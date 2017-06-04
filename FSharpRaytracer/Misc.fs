@@ -7,12 +7,17 @@ open Hitable
 open Sphere
 open Camera
 
+
+let nx = 200.0
+let ny = 100.0
+
 let camera = 
     {
-        LowerLeftCorner = {X = -2.0; Y = -1.0; Z = -1.0};
-        Horizontal = {X = 4.0; Y = 0.0; Z = 0.0};
-        Vertical = {X = 0.0; Y = 2.0; Z = 0.0};
-        Origin = {X = 0.0; Y = 0.0; Z = 0.0}
+        VFOV = 20.0;
+        Aspect = nx/ny;
+        LookFrom = {X = -2.0; Y = 2.0; Z = 1.0};
+        LookAt = { X = 0.0; Y = 0.0; Z = -1.0};
+        VUp = {X = 0.0; Y = 1.0; Z = 0.0}
     }
 
 
@@ -68,7 +73,7 @@ let rec rayToColor (r:Ray) world depth =
 
 
             
-let world = [HitableSphere {Center = {X = 0.0; Y =  0.0; Z =  -1.0}; Radius = 0.5; Mat = Material.Lambertian{X = 0.8; Y = 0.3; Z = 0.3}};
+let world = [HitableSphere {Center = {X = 0.0; Y =  0.0; Z =  -1.0}; Radius = 0.5; Mat = Material.Lambertian{X = 0.1; Y = 0.2; Z = 0.5}};
              HitableSphere {Center = {X = 0.0; Y =  -100.5; Z =  -1.0}; Radius = 100.0; Mat = Material.Lambertian{X= 0.8; Y = 0.8; Z= 0.0}};
              HitableSphere {Center = {X = 1.0; Y = 0.0; Z = -1.0}; Radius = 0.5; Mat = Material.Metal({X = 0.8; Y = 0.6; Z = 0.2}, 1.0)};
              HitableSphere {Center = {X = -1.0; Y = 0.0; Z = -1.0}; Radius = 0.5; Mat = Material.Dialectric 1.5};

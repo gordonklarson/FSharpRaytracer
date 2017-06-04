@@ -41,7 +41,7 @@
                 this.X * b.X + this.Y * b.Y + this.Z * b.Z
 
         member this.cross (b:Vec3) =
-                {X = this.Y*b.Z - this.Z*b.Y; Y = this.Y * b.X - this.X * b.Y; Z = this.X*b.Y - this.Y*b.X}
+                {X = this.Y*b.Z - this.Z*b.Y; Y = -(this.X * b.Z - this.Z * b.X); Z = this.X*b.Y - this.Y*b.X}
 
         member this.getUnitVector =
                 let k = 1.0 / this.length()

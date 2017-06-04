@@ -7,8 +7,6 @@ open Vector3
 
 [<EntryPoint>]
 let main argv = 
-    let nx = 200.0
-    let ny = 100.0
     let ns = 100.0
     let header = sprintf "P3%s%i %i%s255%s" Environment.NewLine (int nx) (int ny) Environment.NewLine Environment.NewLine
     let windowString = 
