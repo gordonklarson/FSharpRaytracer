@@ -13,12 +13,8 @@ let colorSum acc x =
 
 [<EntryPoint>]
 let main argv = 
-    use synth = new SpeechSynthesizer()
-    synth.SetOutputToDefaultAudioDevice()
     let ns = 100.0
     let header = sprintf "P3%s%i %i%s255%s" Environment.NewLine (int nx) (int ny) Environment.NewLine Environment.NewLine
-    let stopWatch = Stopwatch()
-    stopWatch.Start()
     let windowString = 
         calcWindow nx ny ns
         |> Seq.map (fun y -> Seq.fold colorSum {X = 0.0; Y = 0.0; Z = 0.0} y)
@@ -28,9 +24,4 @@ let main argv =
         |> Seq.map printColor
         |> Seq.append [|header|]
     File.WriteAllLines("image.ppm", windowString)
-    stopWatch.Stop()
-    printfn "time: %i" stopWatch.ElapsedMilliseconds
-    sprintf "Rendering completed in %i minutes and %i.%i seconds" stopWatch.Elapsed.Minutes stopWatch.Elapsed.Seconds stopWatch.Elapsed.Milliseconds
-    |> synth.Speak
-    let input = Console.ReadLine()
     0 // return an integer exit code
