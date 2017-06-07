@@ -10,15 +10,25 @@ type  Hitable =
 
 let rand = System.Random()
 
+let testHit (r:Ray) t_min acc x=
+    let (hit, max) = acc
+    match x with
+    |HitableSphere s ->
+        let hit = s.hitSphere r t_min max
+        match hit with
+        |None -> acc
+        |Some y -> (Some y, y.T)
+
 let rec hit r t_min t_max world =
-    let (h, _) = List.fold (fun acc x -> let (hit, max) = acc
-                                         match x with
-                                         |HitableSphere s ->
-                                            let hit = s.hitSphere r t_min max
-                                            match hit with
-                                            |None -> acc
-                                            |Some y -> (Some y, y.T)) (None, t_max) world
-    h
+    //let (h, _) = Seq.fold (testHit r t_min) (None, t_max) world
+      let (h, _) =  Seq.fold(fun acc x -> let (hit, max) = acc
+                                          match x with
+                                          |HitableSphere s ->
+                                             let hit = s.hitSphere r t_min max
+                                             match hit with
+                                             |None -> acc
+                                             |Some y -> (Some y, y.T)) (None, t_max) world
+      h
     
 // returns (scattered ray, attenuation)
 let scatter rayIn hitRecord = 
@@ -46,4 +56,3 @@ let scatter rayIn hitRecord =
                                 let reflected = reflect rayIn.Direction hitRecord.Normal
                                 Some({Origin = hitRecord.P; Direction = reflected}, {X = 1.0; Y = 1.0; Z = 1.0})
                         | false -> Some({Origin = hitRecord.P; Direction = Option.get refracted}, {X = 1.0; Y = 1.0; Z = 1.0})
-    |_ -> None
