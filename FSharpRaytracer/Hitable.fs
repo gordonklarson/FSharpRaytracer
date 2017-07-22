@@ -19,13 +19,12 @@ let testHit (r:Ray) t_min acc x=
         |None -> acc
         |Some y -> (Some y, y.T)
 
-let rec hit r t_min t_max world =
-    //let (h, _) = Seq.fold (testHit r t_min) (None, t_max) world
-      let (h, _) =  Seq.fold(fun acc x -> let (hit, max) = acc
+let hit r t_min t_max world =
+      let (h, _) =  Seq.fold(fun acc x -> let (_, max) = acc
                                           match x with
                                           |HitableSphere s ->
-                                             let hit = s.hitSphere r t_min max
-                                             match hit with
+                                             let sphereHit = s.hitSphere r t_min max
+                                             match sphereHit with
                                              |None -> acc
                                              |Some y -> (Some y, y.T)) (None, t_max) world
       h

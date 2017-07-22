@@ -38,12 +38,10 @@ type Sphere  =
 
 let rand = System.Random()
 
-let randomInUnitSphere () =
-    let rec genRandPoint()= 
+let rec randomInUnitSphere () =
         let p = 2.0 * {X = rand.NextDouble(); Y =  rand.NextDouble(); Z =  rand.NextDouble()} - {X = 1.0; Y =  1.0; Z = 1.0}
         match p with 
         | x when x.squaredLength < 1.0 ->
             x
-        |_ -> genRandPoint()
-    genRandPoint()
+        |_ -> randomInUnitSphere()
     

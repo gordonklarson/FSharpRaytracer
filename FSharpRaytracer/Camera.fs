@@ -53,5 +53,7 @@ let rec randomInUnitDisk() =
 let getCameraRay (s:float) (t:float) (camera: Camera) =
     let rd = camera.lensRadius * randomInUnitDisk()
     let offset = (camera.u * rd.X) + (camera.v * rd.Y)
-    {Origin = camera.origin + offset;
-    Direction = camera.lowerLeftCorner + (s * camera.horizontal) + (t * camera.vertical) - camera.origin - offset}
+    {
+        Origin = camera.origin + offset;
+        Direction = camera.lowerLeftCorner + (s * camera.horizontal) + (t * camera.vertical) - camera.origin - offset
+    }
